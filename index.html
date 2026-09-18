@@ -12,6 +12,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="InkedArtiq">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
     --navy:#1B2A45;
@@ -229,7 +231,8 @@
   <div class="view" id="view-invoices">
     <div class="invoice-toolbar">
       <button class="btn btn-ghost" id="btn-new-invoice">+ New invoice</button>
-      <button class="btn btn-primary" id="btn-print-invoice">Print / Save as PDF</button>
+      <button class="btn btn-ghost" id="btn-print-invoice">Print</button>
+      <button class="btn btn-primary" id="btn-download-pdf">Download PDF</button>
     </div>
     <div class="invoice-layout">
       <div class="invoice-form">
@@ -697,6 +700,48 @@
 
   document.getElementById('btn-print-invoice').addEventListener('click', ()=>{
     window.print();
+  });
+
+  document.getElementById('btn-download-pdf').addEventListener('click', ()=>{
+    const btn = document.getElementById('btn-download-pdf');
+    const sheet = document.getElementById('invoice-sheet');
+    const originalLabel = btn.textContent;
+    btn.textContent = 'Generating…';
+    btn.disabled = true;
+
+    html2canvas(sheet, { scale: 2, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      const clientPart = (currentInvoice.clientName || 'invoice').trim().replace(/[^a-z0-9]+/gi, '-');
+      const numberPart = currentInvoice.number || '001';
+      pdf.save(`InkedArtiq-Invoice-${numberPart}-${clientPart}.pdf`);
+
+      btn.textContent = originalLabel;
+      btn.disabled = false;
+      toast('PDF downloaded');
+    }).catch(() => {
+      btn.textContent = originalLabel;
+      btn.disabled = false;
+      toast('Could not generate PDF');
+    });
   });
 
   /* ---------------- Init ---------------- */
