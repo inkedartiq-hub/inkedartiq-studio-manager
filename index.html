@@ -11,6 +11,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="InkedArtiq">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -138,7 +141,7 @@
   .invoice-sheet{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:40px 40px;min-height:600px;}
 
   .inv-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
-  .inv-plain-name{font-family:Georgia, serif;font-size:1.7rem;font-weight:800;color:var(--navy);letter-spacing:0.01em;}
+  .inv-plain-name{font-family:'Archivo Black','Arial Black',sans-serif;font-size:1.6rem;font-weight:400;color:var(--navy);letter-spacing:0.01em;}
   .inv-plain-name span{color:var(--orange);}
   .inv-tagline{font-size:0.78rem;color:var(--ink);opacity:0.75;margin-top:6px;font-family:'Inter',sans-serif;}
   .inv-logo-img{max-height:64px;max-width:260px;object-fit:contain;display:block;}
@@ -187,7 +190,7 @@
   #inv-qr-canvas img, #inv-qr-canvas canvas{display:block;}
   .qr-placeholder{width:130px;height:130px;border:1px dashed var(--line);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:var(--ink);opacity:0.5;text-align:center;padding:10px;}
 
-  .inv-footer{font-size:0.86rem;color:var(--navy-soft);line-height:1.7;}
+  .inv-footer{font-size:0.86rem;color:var(--navy-soft);line-height:1.7;text-align:right;}
   .inv-footer strong{color:var(--navy);}
 
   .invoice-toolbar{display:flex;justify-content:flex-end;gap:10px;margin-bottom:14px;}
@@ -316,7 +319,6 @@
           </div>
           <div class="inv-right">
             <div class="inv-studio-info">
-              KANNUR<br>
               inkedartiq@gmail.com
             </div>
           </div>
