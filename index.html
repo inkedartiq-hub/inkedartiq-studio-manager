@@ -135,9 +135,9 @@
   .remove-line:hover{opacity:1;color:var(--red);}
 
   /* Printable invoice sheet */
-  .invoice-sheet{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:52px 48px;min-height:600px;}
+  .invoice-sheet{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:40px 40px;min-height:600px;}
 
-  .inv-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;}
+  .inv-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
   .inv-logo-line{display:flex;align-items:flex-start;font-family:'Archivo Black','Arial Black',sans-serif;line-height:0.95;}
   .inv-logo-badge{background:var(--orange);color:var(--white);padding:2px 6px;font-size:1.9rem;font-weight:900;margin-right:2px;}
   .inv-logo-stack{}
@@ -146,19 +146,32 @@
   .inv-logo-stack .l2, .inv-logo-stack .l3{font-size:1.9rem;font-weight:900;color:var(--navy);letter-spacing:0.01em;}
   .inv-logo-stack .l2 em, .inv-logo-stack .l3 em{color:var(--orange);font-style:normal;}
   .inv-tagline{font-size:0.78rem;color:var(--ink);opacity:0.75;margin-top:6px;font-family:'Inter',sans-serif;}
+  .inv-logo-img{max-height:64px;max-width:260px;object-fit:contain;display:block;}
 
   .inv-right{text-align:right;}
-  .inv-number{font-family:'Archivo Black','Arial Black',sans-serif;font-size:2.2rem;font-weight:900;color:var(--orange);}
-  .inv-studio-info{font-size:0.92rem;color:var(--navy-soft);line-height:1.7;margin-top:8px;}
+  .inv-studio-info{font-size:0.92rem;color:var(--navy-soft);line-height:1.6;}
 
-  .inv-details-block{margin:0 0 32px;display:flex;justify-content:flex-end;}
+  /* Branding upload controls (form side, not printed) */
+  .upload-row{display:flex;align-items:center;gap:10px;}
+  .upload-row input[type=file]{display:none;}
+  .upload-btn{
+    font-family:inherit;font-size:0.8rem;font-weight:600;color:var(--navy);
+    border:1px solid var(--line);background:var(--warm-white);padding:8px 14px;
+    border-radius:3px;cursor:pointer;white-space:nowrap;
+  }
+  .upload-btn:hover{border-color:var(--orange);color:var(--orange);}
+  .upload-preview{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--ink);opacity:0.8;}
+  .upload-preview img{height:32px;width:32px;object-fit:contain;border:1px solid var(--line);border-radius:3px;background:var(--white);}
+  .upload-clear{background:none;border:none;color:var(--red);cursor:pointer;font-size:0.9rem;padding:2px 4px;}
+
+  .inv-details-block{margin:0 0 22px;display:flex;justify-content:flex-end;}
   .inv-details-inner{text-align:right;}
   .inv-details-heading{font-weight:800;font-size:0.95rem;letter-spacing:0.02em;margin-bottom:10px;color:var(--navy);}
   .inv-details-row{display:grid;grid-template-columns:auto 16px auto;gap:10px;font-size:0.92rem;color:var(--navy-soft);margin-bottom:4px;justify-content:end;}
   .inv-details-row .dl{text-align:left;}
   .inv-details-row .dv{text-align:right;color:var(--navy);font-weight:500;}
 
-  table.inv-table{width:100%;border-collapse:collapse;margin-bottom:30px;border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  table.inv-table{width:100%;border-collapse:collapse;margin-bottom:20px;border:1px solid var(--line);border-radius:6px;overflow:hidden;}
   table.inv-table th{
     text-align:left;font-size:0.82rem;color:var(--navy-soft);
     padding:14px 16px;border-bottom:1px solid var(--line);font-weight:600;background:var(--white);
@@ -167,13 +180,13 @@
   table.inv-table td{padding:16px;border-bottom:1px solid var(--line);font-size:0.92rem;color:var(--navy);}
   table.inv-table tr:last-child td{border-bottom:none;}
 
-  .inv-totals-wrap{display:flex;justify-content:flex-end;margin-bottom:40px;}
+  .inv-totals-wrap{display:flex;justify-content:flex-end;margin-bottom:26px;}
   .inv-totals{width:300px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 20px;}
   .inv-totals-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.92rem;color:var(--navy-soft);}
   .inv-totals-row.sub span:last-child, .inv-totals-row.balance span:last-child{font-weight:800;color:var(--navy);}
   .inv-totals-row.balance{border-top:1px solid var(--line);margin-top:4px;padding-top:12px;}
 
-  .inv-pay-section{display:flex;align-items:flex-start;gap:20px;margin-bottom:36px;}
+  .inv-pay-section{display:flex;align-items:flex-start;gap:20px;margin-bottom:24px;}
   .inv-pay-heading{font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:10px;}
   #inv-qr-canvas{border:1px solid var(--line);border-radius:4px;padding:4px;background:var(--white);}
   #inv-qr-canvas img, #inv-qr-canvas canvas{display:block;}
@@ -236,9 +249,23 @@
     </div>
     <div class="invoice-layout">
       <div class="invoice-form">
-        <h3>Invoice details</h3>
+        <h3>Studio branding</h3>
         <div class="field" style="margin-top:16px;">
-          <label>Invoice number</label>
+          <label>Your logo (used on every invoice, saved on this device)</label>
+          <div class="upload-row">
+            <button type="button" class="upload-btn" id="btn-upload-logo">Upload logo</button>
+            <input type="file" id="inv-logo-file" accept="image/*">
+            <div class="upload-preview" id="logo-preview" style="display:none;">
+              <img id="logo-preview-img" src="" alt="Logo preview">
+              <span>Logo set</span>
+              <button type="button" class="upload-clear" id="btn-clear-logo">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:22px;">Invoice details</h3>
+        <div class="field" style="margin-top:16px;">
+          <label>Invoice number (for your records — not printed)</label>
           <input type="text" id="inv-number" placeholder="003">
         </div>
         <div class="field">
@@ -263,8 +290,20 @@
           <input type="number" id="inv-advance" placeholder="0">
         </div>
         <div class="field">
-          <label>Pay online — UPI ID or payment link (generates QR)</label>
+          <label>Pay online — UPI ID or payment link (auto-generates a QR)</label>
           <input type="text" id="inv-upi" placeholder="e.g. inkedartiq@upi">
+        </div>
+        <div class="field">
+          <label>Or upload your own QR code image (used instead, saved on this device)</label>
+          <div class="upload-row">
+            <button type="button" class="upload-btn" id="btn-upload-qr">Upload QR image</button>
+            <input type="file" id="inv-qr-file" accept="image/*">
+            <div class="upload-preview" id="qr-preview" style="display:none;">
+              <img id="qr-preview-img" src="" alt="QR preview">
+              <span>QR set</span>
+              <button type="button" class="upload-clear" id="btn-clear-qr">Remove</button>
+            </div>
+          </div>
         </div>
         <div class="field">
           <label>Contact number</label>
@@ -276,8 +315,8 @@
 
       <div class="invoice-sheet" id="invoice-sheet">
         <div class="inv-top">
-          <div>
-            <div class="inv-logo-line">
+          <div id="inv-logo-block">
+            <div class="inv-logo-line" id="inv-logo-fallback">
               <div class="inv-logo-badge">i</div>
               <div class="inv-logo-stack">
                 <div class="l1">NKED ARTIQ</div>
@@ -285,10 +324,9 @@
                 <div class="l3">STUDI<em>O</em></div>
               </div>
             </div>
-            <div class="inv-tagline">ink the future designs</div>
+            <div class="inv-tagline" id="inv-tagline-text">ink the future designs</div>
           </div>
           <div class="inv-right">
-            <div class="inv-number" id="prev-number">003</div>
             <div class="inv-studio-info">
               INKEDARTIQ<br>
               KANNUR<br>
@@ -543,6 +581,109 @@
     document.getElementById('project-modal').classList.remove('active');
   });
 
+  /* ---------------- Studio branding (logo + QR, saved on this device) ---------------- */
+  const LOGO_KEY = 'inkedartiq_logo_data';
+  const QR_KEY = 'inkedartiq_qr_data';
+
+  function readFileAsDataURL(file){
+    return new Promise((resolve, reject)=>{
+      const reader = new FileReader();
+      reader.onload = ()=>resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderLogo(){
+    const data = localStorage.getItem(LOGO_KEY);
+    const block = document.getElementById('inv-logo-block');
+    const fallback = document.getElementById('inv-logo-fallback');
+    const tagline = document.getElementById('inv-tagline-text');
+    let img = document.getElementById('inv-logo-img');
+
+    if(data){
+      fallback.style.display = 'none';
+      tagline.style.display = 'none';
+      if(!img){
+        img = document.createElement('img');
+        img.id = 'inv-logo-img';
+        img.className = 'inv-logo-img';
+        img.alt = 'InkedArtiq logo';
+        block.insertBefore(img, fallback);
+      }
+      img.src = data;
+      img.style.display = 'block';
+
+      document.getElementById('logo-preview').style.display = 'flex';
+      document.getElementById('logo-preview-img').src = data;
+    } else {
+      fallback.style.display = 'flex';
+      tagline.style.display = 'block';
+      if(img) img.style.display = 'none';
+      document.getElementById('logo-preview').style.display = 'none';
+    }
+  }
+
+  document.getElementById('btn-upload-logo').addEventListener('click', ()=>{
+    document.getElementById('inv-logo-file').click();
+  });
+  document.getElementById('inv-logo-file').addEventListener('change', async (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    try{
+      const dataUrl = await readFileAsDataURL(file);
+      localStorage.setItem(LOGO_KEY, dataUrl);
+      renderLogo();
+      toast('Logo saved');
+    }catch(err){
+      toast('Could not read that image');
+    }
+    e.target.value = '';
+  });
+  document.getElementById('btn-clear-logo').addEventListener('click', ()=>{
+    localStorage.removeItem(LOGO_KEY);
+    renderLogo();
+    toast('Logo removed');
+  });
+
+  document.getElementById('btn-upload-qr').addEventListener('click', ()=>{
+    document.getElementById('inv-qr-file').click();
+  });
+  document.getElementById('inv-qr-file').addEventListener('change', async (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    try{
+      const dataUrl = await readFileAsDataURL(file);
+      localStorage.setItem(QR_KEY, dataUrl);
+      document.getElementById('qr-preview').style.display = 'flex';
+      document.getElementById('qr-preview-img').src = dataUrl;
+      updatePreview();
+      toast('QR image saved');
+    }catch(err){
+      toast('Could not read that image');
+    }
+    e.target.value = '';
+  });
+  document.getElementById('btn-clear-qr').addEventListener('click', ()=>{
+    localStorage.removeItem(QR_KEY);
+    document.getElementById('qr-preview').style.display = 'none';
+    updatePreview();
+    toast('QR image removed');
+  });
+
+  function initBrandingPreviews(){
+    const logoData = localStorage.getItem(LOGO_KEY);
+    if(logoData){
+      document.getElementById('logo-preview').style.display = 'flex';
+      document.getElementById('logo-preview-img').src = logoData;
+    }
+    const qrData = localStorage.getItem(QR_KEY);
+    if(qrData){
+      document.getElementById('qr-preview').style.display = 'flex';
+      document.getElementById('qr-preview-img').src = qrData;
+    }
+  }
+
   /* ---------------- Invoices ---------------- */
   function nextInvoiceNumber(){
     return String(invoices.length + 1).padStart(3,'0');
@@ -571,6 +712,7 @@
     document.getElementById('inv-upi').value = currentInvoice.upi || '';
     document.getElementById('inv-phone').value = currentInvoice.phone || '';
     renderLineItemInputs();
+    renderLogo();
     updatePreview();
   }
 
@@ -620,9 +762,17 @@
 
   function renderQR(){
     const container = document.getElementById('inv-qr-canvas');
+    const uploadedQR = localStorage.getItem(QR_KEY);
+
+    if(uploadedQR){
+      container.innerHTML = `<img src="${uploadedQR}" alt="Payment QR" style="width:130px;height:130px;object-fit:contain;display:block;">`;
+      qrInstance = null;
+      return;
+    }
+
     const value = (currentInvoice.upi || '').trim();
     if(!value){
-      container.innerHTML = '<div class="qr-placeholder">Add a UPI ID or payment link to generate a QR</div>';
+      container.innerHTML = '<div class="qr-placeholder">Add a UPI ID, payment link, or upload a QR image</div>';
       qrInstance = null;
       return;
     }
@@ -630,25 +780,22 @@
     if(!/^https?:\/\//i.test(value) && !/^upi:\/\//i.test(value)){
       payload = 'upi://pay?pa=' + encodeURIComponent(value) + '&pn=' + encodeURIComponent('InkedArtiq');
     }
-    if(!qrInstance || container.dataset.lastValue !== payload){
-      container.innerHTML = '';
-      try{
-        qrInstance = new QRCode(container, {
-          text: payload,
-          width: 130,
-          height: 130,
-          colorDark: '#1B2A45',
-          colorLight: '#ffffff'
-        });
-        container.dataset.lastValue = payload;
-      }catch(e){
-        container.innerHTML = '<div class="qr-placeholder">QR generation unavailable offline</div>';
-      }
+    container.innerHTML = '';
+    try{
+      qrInstance = new QRCode(container, {
+        text: payload,
+        width: 130,
+        height: 130,
+        colorDark: '#1B2A45',
+        colorLight: '#ffffff'
+      });
+      container.dataset.lastValue = payload;
+    }catch(e){
+      container.innerHTML = '<div class="qr-placeholder">QR generation unavailable offline</div>';
     }
   }
 
   function updatePreview(){
-    document.getElementById('prev-number').textContent = currentInvoice.number || '001';
     document.getElementById('prev-client-name').textContent = currentInvoice.clientName || '—';
     document.getElementById('prev-date').textContent = fmtDate(currentInvoice.date);
 
@@ -715,20 +862,21 @@
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pageWidth = 210;
       const pageHeight = 297;
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
 
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+      // Fit the whole invoice onto a single page, scaling down if it would
+      // otherwise overflow, and centering it horizontally.
+      let imgWidth = pageWidth;
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let xOffset = 0;
 
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+      if(imgHeight > pageHeight){
+        const scale = pageHeight / imgHeight;
+        imgHeight = pageHeight;
+        imgWidth = imgWidth * scale;
+        xOffset = (pageWidth - imgWidth) / 2;
       }
+
+      pdf.addImage(imgData, 'PNG', xOffset, 0, imgWidth, imgHeight);
 
       const clientPart = (currentInvoice.clientName || 'invoice').trim().replace(/[^a-z0-9]+/gi, '-');
       const numberPart = currentInvoice.number || '001';
@@ -746,6 +894,7 @@
 
   /* ---------------- Init ---------------- */
   renderProjects();
+  initBrandingPreviews();
   loadInvoiceIntoForm(blankInvoice());
 
   if("serviceWorker" in navigator){
