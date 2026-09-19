@@ -138,13 +138,8 @@
   .invoice-sheet{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:40px 40px;min-height:600px;}
 
   .inv-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
-  .inv-logo-line{display:flex;align-items:flex-start;font-family:'Archivo Black','Arial Black',sans-serif;line-height:0.95;}
-  .inv-logo-badge{background:var(--orange);color:var(--white);padding:2px 6px;font-size:1.9rem;font-weight:900;margin-right:2px;}
-  .inv-logo-stack{}
-  .inv-logo-stack .l1{font-size:1.9rem;font-weight:900;color:var(--navy);letter-spacing:0.01em;}
-  .inv-logo-stack .l1 span{color:var(--navy);}
-  .inv-logo-stack .l2, .inv-logo-stack .l3{font-size:1.9rem;font-weight:900;color:var(--navy);letter-spacing:0.01em;}
-  .inv-logo-stack .l2 em, .inv-logo-stack .l3 em{color:var(--orange);font-style:normal;}
+  .inv-plain-name{font-family:Georgia, serif;font-size:1.7rem;font-weight:800;color:var(--navy);letter-spacing:0.01em;}
+  .inv-plain-name span{color:var(--orange);}
   .inv-tagline{font-size:0.78rem;color:var(--ink);opacity:0.75;margin-top:6px;font-family:'Inter',sans-serif;}
   .inv-logo-img{max-height:64px;max-width:260px;object-fit:contain;display:block;}
 
@@ -316,14 +311,7 @@
       <div class="invoice-sheet" id="invoice-sheet">
         <div class="inv-top">
           <div id="inv-logo-block">
-            <div class="inv-logo-line" id="inv-logo-fallback">
-              <div class="inv-logo-badge">i</div>
-              <div class="inv-logo-stack">
-                <div class="l1">NKED ARTIQ</div>
-                <div class="l2">DESIG<em>N</em></div>
-                <div class="l3">STUDI<em>O</em></div>
-              </div>
-            </div>
+            <div class="inv-plain-name" id="inv-logo-fallback">Inked<span>Artiq</span></div>
             <div class="inv-tagline" id="inv-tagline-text">ink the future designs</div>
           </div>
           <div class="inv-right">
@@ -617,7 +605,7 @@
       document.getElementById('logo-preview').style.display = 'flex';
       document.getElementById('logo-preview-img').src = data;
     } else {
-      fallback.style.display = 'flex';
+      fallback.style.display = 'block';
       tagline.style.display = 'block';
       if(img) img.style.display = 'none';
       document.getElementById('logo-preview').style.display = 'none';
